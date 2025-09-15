@@ -1,0 +1,99 @@
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export PATH=~/bin:~/.local/bin:$PATH
+export EDITOR="mate -w "
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+export HOMEBREW_NO_EMOJI=1
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_AUTO_UPDATE=1
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/Cellar/openjdk/24.0.2/bin:$HOME/.cargo/bin:$PATH"
+alias claude="/Users/johann/.claude/local/claude"
+fi
+
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+alias d="cd ~/Dropbox"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+
+function cdf() { # short for `cdfinder`
+	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
+}
+function o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
+}
+export FPATH=/Users/johann/.local/share/zsh/sight-functions:$FPATH
+export ET_NO_TELEMETRY=1
+bindkey -e
+export RCLONE_STATS=10s
+export RCLONE_CHECKERS=16
+export RCLONE_STATS_FILE_NAME_LENGTH=0
+export RCLONE_LOG_FILE=/tmp/rclone.log
+setopt PROMPT_SUBST
+PROMPT='${(e):-"$(if [[ -n $SSH_CONNECTION ]]; then echo -n \"%m \"; fi)"}${(e):-"$(ret=$?; if [[ $ret -ne 0 ]]; then echo -n "exit:$ret "; fi)"}%2~ %# '
+#options
+setopt NO_CASE_GLOB
+setopt AUTO_CD
+setopt CORRECT
+#setopt CORRECT_ALL
+
+HISTSIZE=10000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+
+#completions
+# case insensitive path-completion
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+# partial completion suggestions
+zstyle ':completion:*' list-suffixes
+zstyle ':completion:*' expand prefix suffix
+autoload -Uz compinit && compinit
+autoload -U bashcompinit && bashcompinit
+alias ffu="fanficfare -u "
+alias fff="fanficfare "
+alias rcsync="rclone --checkers=16 --log-file ~/rclone.log --progress --stats 10s --stats-file-name-length 0 sync "
+#functions
+mkcd() {
+mkdir -p "$1"
+cd "$1"
+}
+ffdl() { fanficfare --download-list=$* }
+function fs() {
+	if du -b /dev/null > /dev/null 2>&1; then
+		local arg=-sbh;
+	else
+		local arg=-sh;
+	fi
+	if [[ -n "$@" ]]; then
+		du $arg -- "$@";
+	else
+		du $arg .[^.]* ./*;
+	fi;
+}
+
+alias -g GR="| grep "
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+export PYTHONPYCACHEPREFIX=/tmp/pycache
+export RUFF_CACHE_DIR=/tmp/ruffcache
+alias "wget2 archive "="wget2 --mirror --convert-links --adjust-extension --page-requisites --no-parent --wait=1 --random-wait --limit-rate=200k -R 'index.html*' "
+alias ll="ls -lahL"
+alias sudo='sudo '
+alias rsb='rclone -P sync "bits:BITS" --drive-shared-with-me ~/Documents/bits-html' 
