@@ -1,8 +1,18 @@
 
 encryption = "age"
+editor="nano"
 [age]
 	identity = "~/.config/age/keys.txt"
 	recipients = ["age1w9zaxpkjt4h4yfulr7yw9scacls87ekxjnzaufruud2p8k3wsveqkpz3em"]
 
+
+{{ if eq .chezmoi.os "darwin" }}
+editor = "mate -w"
+{{ end }}
+
 [git]
 	autoCommit = true
+
+[data]
+	name = "Johann"
+	email = "johann@jtan.me"
