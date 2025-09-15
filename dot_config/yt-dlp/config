@@ -1,0 +1,2 @@
+
+--embed-metadata -o %(title)s.%(ext)s
