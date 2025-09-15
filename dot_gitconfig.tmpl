@@ -1,0 +1,18 @@
+[core]
+	excludesfile = ~/.gitignore_global
+[user]
+	name = Johann
+	email = johann@jtan.me
+[init]
+	defaultBranch = main
+[alias]
+	p = pull --recurse-submodules
+	c = clone --recursive
+	co = checkout
+[advice]
+	detachedHead = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
