@@ -1,3 +1,4 @@
+{{- if(lookPath "fanficfare") -}}
 [defaults]
 is_adult:true
 output_filename: ${title}, ${author}${formatext}
@@ -47,3 +48,5 @@ exclude_notes:authorheadnotes,chaptersummary,chapterheadnotes,chapterfootnotes,a
 [base_xenforoforum]
 strip_chapter_numbers:false
 add_chapter_numbers:false
+
+{{- end -}}
