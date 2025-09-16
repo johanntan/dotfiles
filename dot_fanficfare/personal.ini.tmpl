@@ -1,0 +1,49 @@
+[defaults]
+is_adult:true
+output_filename: ${title}, ${author}${formatext}
+always_overwrite: true
+titlepage_entries: storyUrl,description,category,genre,language,characters,ships,status,datePublished,dateUpdated,numChapters,numWords
+#allow_unsafe_filename: true
+browser_cache_path:/Users/johann/Library/Caches/Firefox/Profiles/k4eg80em.default-release/cache2 
+chapter_title_strip_pattern:^([0-9]+[\.: -]+)?(Chapter *[0-9]+[\.:, -]*)?
+chapter_title_add_pattern:Chapter ${number}. ${title}
+strip_chapter_numbers:true
+add_chapter_numbers:true
+browser_cache_age_limit:4.0
+
+[txt]
+include_tocpage: false
+titlepage_entries:storyUrl,category,genre,characters,ships,status,datePublished,dateUpdated,warnings,numChapters,numWords,description
+wrap_width: 0
+
+[www.fanfiction.net]
+#use_browser_cache:true
+use_flaresolverr_proxy:true
+include_images:false
+#use_browser_cache_only:true
+open_pages_in_browser:false
+never_make_cover:true
+skip_author_cover:true
+continue_on_chapter_error:false
+[archiveofourown.org]
+do_update_hook:true
+use_view_full_work:false
+use_archiveofourown_gay:true
+use_basic_cache:true
+#use_browser_cache:true
+#use_browser_cache_only:true
+username:{{ onepasswordRead "op://Personal/AO3/username" }}
+password:{{ onepasswordRead "op://Personal/AO3/password" }}
+exclude_notes:authorheadnotes,chaptersummary,chapterheadnotes,chapterfootnotes,authorfootnotes,inspiredlinks
+
+[www.royalroad.com]
+include_author_notes:false
+
+[squidgeworld.org]
+username:{{ onepasswordRead "op://Personal/SquidgeWorld/username" }}
+password:{{ onepasswordRead "op://Personal/SquidgeWorld/password" }}
+exclude_notes:authorheadnotes,chaptersummary,chapterheadnotes,chapterfootnotes,authorfootnotes,inspiredlinks
+
+[base_xenforoforum]
+strip_chapter_numbers:false
+add_chapter_numbers:false
