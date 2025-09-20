@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eufo pipefail
 
-echo "🚀  Setting up @johanntan dotfiles."
+echo "Setting up @johanntan dotfiles."
 
 if xcode-select -p &> /dev/null; then
   echo "✅  Xcode command line tools are already installed."
