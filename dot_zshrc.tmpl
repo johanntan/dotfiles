@@ -2,8 +2,11 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PATH=~/bin:~/.local/bin:$PATH
 export EDITOR="nano"
-{{- if eq .chezmoi.os "darwin" -}}
-export VISUAL-"mate -w "
+{{ if eq .chezmoi.os "linux"}}
+export RMATE\_HOST=100.85.190.128
+{{ end }}
+{{ if eq .chezmoi.os "darwin" }}
+export VISUAL="mate -w "
 if [[ -f "/opt/homebrew/bin/brew" ]] then
 export HOMEBREW_NO_EMOJI=1
 export HOMEBREW_NO_ANALYTICS=1
@@ -31,7 +34,7 @@ function o() {
 		open "$@";
 	fi;
 }
-{{- end -}}
+{{ end }}
 export FPATH=/Users/johann/.local/share/zsh/sight-functions:$FPATH
 export ET_NO_TELEMETRY=1
 bindkey -e
