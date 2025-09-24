@@ -1,15 +1,15 @@
 
 encryption = "age"
-editor="nano"
 [age]
 	identity = "~/.config/chezmoi/key.txt"
 	recipients = ["age1dek7s9z8udgy8k349k9wf3vepq00yz3mmj0jjfwlt5xlpsjtf5dqjv5chs"]
 
-
-{{ if eq .chezmoi.os "darwin" }}
-editor = "code"
 [edit]
+{{ if eq .chezmoi.os "darwin" }}
+command="code"
 args="--wait"
+{{ else }}
+command="nano"
 {{ end }}
 
 [git]
