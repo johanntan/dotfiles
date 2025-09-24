@@ -7,9 +7,9 @@ editor="nano"
 
 
 {{ if eq .chezmoi.os "darwin" }}
-editor = "mate"
+editor = "code"
 [edit]
-args="-w"
+args="--wait"
 {{ end }}
 
 [git]
