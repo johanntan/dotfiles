@@ -1,11 +1,11 @@
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export PATH=~/bin:~/.local/bin:$PATH
-export EDITOR="nano"
-{{ if eq .chezmoi.os "linux"}}
-export RMATE\_HOST=100.85.190.128
-{{ end }}
-{{ if eq .chezmoi.os "darwin" }}
+# Modular zsh loader: sources ~/.zsh/??-*.zsh*
+ZSH_DIR="$HOME/.zsh"
+[ -d "$ZSH_DIR" ] || mkdir -p "$ZSH_DIR"
+
+# Source files in deterministic order: 00-*, 10-*, ...
+for f in "$ZSH_DIR"/??-*.zsh*; do
+	[ -r "$f" ] && source "$f"
+done
 export VISUAL="mate -w "
 if [[ -f "/opt/homebrew/bin/brew" ]] then
 export HOMEBREW_NO_EMOJI=1
