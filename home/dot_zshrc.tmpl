@@ -17,12 +17,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:/opt/local/bin:/opt/local/sbin:$PATH
-alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
-alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
-alias d="cd ~/Dropbox"
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-
 function cdf() { # short for `cdfinder`
 	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
 }
@@ -70,9 +64,6 @@ zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
 autoload -Uz compinit && compinit
 autoload -U bashcompinit && bashcompinit
-alias ffu="fanficfare -u "
-alias fff="fanficfare "
-alias rcsync="rclone --checkers=16 --log-file ~/rclone.log --progress --stats 10s --stats-file-name-length 0 sync "
 #functions
 mkcd() {
 mkdir -p "$1"
@@ -92,13 +83,5 @@ function fs() {
 	fi;
 }
 
-alias -g GR="| grep "
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
-alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 export PYTHONPYCACHEPREFIX=/tmp/pycache
 export RUFF_CACHE_DIR=/tmp/ruffcache
-alias "wget2 archive "="wget2 --mirror --convert-links --adjust-extension --page-requisites --no-parent --wait=1 --random-wait --limit-rate=200k -R 'index.html*' "
-alias ll="ls -lahL"
-alias sudo='sudo '
-alias rsb='rclone -P sync "bits:BITS" --drive-shared-with-me ~/Documents/bits-html' 
