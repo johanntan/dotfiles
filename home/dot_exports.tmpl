@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+export EDITOR=nano
+{{ if eq ".chezmoi.os "darwin" }}
+export VISUAL="mate -w "
+{{ end }}
+{{ if (lookPath "brew") }}
+export HOMEBREW_NO_EMOJI=1
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_AUTO_UPDATE=1
+{{ end }}
+export FPATH=$HOME/.local/share/zsh/site-functions:$FPATH
+export ET_NO_TELEMETRY=1
+export RCLONE_STATS=10s
+export RCLONE_CHECKERS=16
+export RCLONE_STATS_FILE_NAME_LENGTH=0
+export RCLONE_LOG_FILE=/tmp/rclone.log
+export PYTHONPYCACHEPREFIX=/tmp/pycache
+export RUFF_CACHE_DIR=/tmp/ruffcache
