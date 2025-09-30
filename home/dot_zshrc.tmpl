@@ -1,12 +1,8 @@
-# Modular zsh loader: sources ~/.zsh/??-*.zsh*
-ZSH_DIR="$HOME/.zsh"
-[ -d "$ZSH_DIR" ] || mkdir -p "$ZSH_DIR"
-
-for f in "$ZSH_DIR"/*.zsh*(N); do
-	[ -r "$f" ] && source "$f"
-done
-cd
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+for file in ~/.{path,exports,aliases,functions,extra,completions}; do
+	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
+unset file;
 {{ if eq .chezmoi.os "darwin" }}
 export VISUAL="mate -w "
 if [[ -f "/opt/homebrew/bin/brew" ]] then
