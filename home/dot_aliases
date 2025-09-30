@@ -14,3 +14,6 @@ alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[
 alias "wget2 archive "="wget2 --mirror --convert-links --adjust-extension --page-requisites --no-parent --wait=1 --random-wait --limit-rate=200k -R 'index.html*' "
 alias ll="ls -lahL"
 alias sudo='sudo '
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+alias reload="exec ${SHELL} -l"
+alias path='echo -e ${PATH//:/\\n}'
