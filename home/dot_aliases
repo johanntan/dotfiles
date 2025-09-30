@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+#alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+alias d="cd ~/Dropbox"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias ffu="fanficfare -u "
+alias fff="fanficfare "
+alias -g GR="| grep "
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+alias "wget2 archive "="wget2 --mirror --convert-links --adjust-extension --page-requisites --no-parent --wait=1 --random-wait --limit-rate=200k -R 'index.html*' "
+alias ll="ls -lahL"
+alias sudo='sudo '
