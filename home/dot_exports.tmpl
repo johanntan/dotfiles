@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export EDITOR=nano
-{{ if eq ".chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" }}
 export VISUAL="mate -w "
 {{ end }}
 {{ if (lookPath "brew") }}
