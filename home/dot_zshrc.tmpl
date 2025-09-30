@@ -2,12 +2,12 @@
 ZSH_DIR="$HOME/.zsh"
 [ -d "$ZSH_DIR" ] || mkdir -p "$ZSH_DIR"
 
-# Source files in deterministic order: 00-*, 10-*, ...
-for f in "$ZSH_DIR"/??-*.zsh*; do
+for f in "$ZSH_DIR"/*.zsh*(N); do
 	[ -r "$f" ] && source "$f"
 done
+cd
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
-{{- if eq .chezmoi.os "darwin" -}}
+{{ if eq .chezmoi.os "darwin" }}
 export VISUAL="mate -w "
 if [[ -f "/opt/homebrew/bin/brew" ]] then
 export HOMEBREW_NO_EMOJI=1
@@ -17,7 +17,6 @@ export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH
 function cdf() { # short for `cdfinder`
 	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
 }
