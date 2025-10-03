@@ -7,7 +7,7 @@ encryption = "age"
 [edit]
 {{ if eq .chezmoi.os "darwin" }}
 command="code"
-args="--wait"
+args="-wn"
 {{ else }}
 command="nano"
 {{ end }}
