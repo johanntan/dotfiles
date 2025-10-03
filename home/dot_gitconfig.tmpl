@@ -16,7 +16,7 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-{{ if .chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" }}
 [user]
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIELJA2DQjbG04HX++7anti9LxYJt2QS7kn+AdncXaFP6
 [gpg]
