@@ -17,8 +17,11 @@ set -gx HOMEBREW_NO_AUTO_UPDATE 1
 
 abbr -a bu brew update
 abbr -a bi brew install
+abbr -a bic brew install --cask
 abbr -a bcl brew cleanup
 abbr -a bou brew outdated
 abbr -a bug brew upgrade
 abbr -a bs brew search
 abbr -a bin brew info
+abbr -a bun brew uninstal
+abbr -a buz brew uninstall --zap
