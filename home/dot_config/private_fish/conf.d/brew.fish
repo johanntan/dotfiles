@@ -1,8 +1,8 @@
 if not set -q HOMEBREW_PREFIX
     if test -e /opt/homebrew/bin/brew
-        /opt/homebrew/bin/brew shellenv | source
+        eval (/opt/homebrew/bin/brew shellenv)
     else if test -e /home/.linuxbrew/bin/brew
-        /home/linuxbrew/.linuxbrew/bin/brew shellenv | source
+        eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
     else
         return 1
     end
