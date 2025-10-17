@@ -3,3 +3,4 @@ if status is-interactive
 	set -g fish_autosuggestion_enabled 0
 	set -U fish_greeting
 end
+set -gx DTK_PROGRAM swiftmac
