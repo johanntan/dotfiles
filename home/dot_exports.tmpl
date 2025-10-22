@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-
+{{ if eq .chezmoi.os "linux" }}
+export EDITOR="rmate -w "
+{{ else }}
 export EDITOR=nano
+{{ end }}
 {{ if eq .chezmoi.os "darwin" }}
 export VISUAL="mate -w "
 {{ end }}
