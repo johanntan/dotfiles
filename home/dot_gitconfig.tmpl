@@ -3,8 +3,6 @@
 [user]
 	name = Johann
 	email = johann@jtan.me
-[init]
-	defaultBranch = main
 [alias]
 	p = pull --recurse-submodules
 	c = clone --recursive
@@ -18,7 +16,7 @@
 	required = true
 {{ if eq .chezmoi.os "darwin" }}
 [user]
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIELJA2DQjbG04HX++7anti9LxYJt2QS7kn+AdncXaFP6
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMLufhoyybvnYRXA1Houh4oKDY5ypa8fa6eMp/Jy+74B
 [gpg]
 	format = ssh
 [gpg "ssh"]
