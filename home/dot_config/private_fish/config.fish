@@ -1,5 +1,6 @@
 if status is-interactive
 	zoxide init fish | source
+	atuin init fish | source
 	set -g fish_autosuggestion_enabled 0
 	set -U fish_greeting
 	source $HOME/.config/op/plugins.sh
