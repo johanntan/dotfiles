@@ -8,16 +8,11 @@
     end
 #end
 
-if status is-interactive
-	zoxide init fish | source
-	set -g fish_autosuggestion_enabled 0
-	set -U fish_greeting
-end
-
 set -q HOMEBREW_NO_ANALYTICS || set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx HOMEBREW_NO_EMOJI 1
 set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx HOMEBREW_NO_INSTALL_CLEANUP 1
+set -gx HOMEBREW_USE_INTERNAL_API 1
 set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx HOMEBREW_BUNDLE_DUMP_NO_VSCODE 1
