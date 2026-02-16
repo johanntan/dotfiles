@@ -1,3 +1,5 @@
+fish_add_path ~/.local/bin
+fish_add_path ~/.cargo/bin
 if status is-interactive
 	zoxide init fish | source
 	atuin init fish --disable-up-arrow | source
