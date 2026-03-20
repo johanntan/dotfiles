@@ -1,7 +1,7 @@
 if [[ "`uname`" == "Darwin" ]]; then
 	EDITOR="mate -w"
-	VISUAL="mate -w"
-elif [[ "`uname`" == "Linux" ]] && command -q rmate; then
+	export VISUAL="mate -w"
+elif [[ "`uname`" == "Linux" ]] && command -v rmate &>/dev/null; then
 	EDITOR="rmate -w"
 else
 	EDITOR=nano
