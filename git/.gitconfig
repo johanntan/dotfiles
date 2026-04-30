@@ -1,5 +1,5 @@
 [core]
-	excludesfile = ~/.config/git/ignore
+	excludesfile = ~/.gitignore-global
 [user]
 	name = Johann
 	email = johann@jtan.me
@@ -15,11 +15,7 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[user]
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMLufhoyybvnYRXA1Houh4oKDY5ypa8fa6eMp/Jy+74B
-[gpg]
-	format = ssh
-[gpg "ssh"]
-	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-[commit]
-	gpgsign = true
+[include]
+	path = ~/.gitconfig-local
+[init]
+	defaultBranch = main
