@@ -10,6 +10,8 @@ if [[ -n $location && -d $location ]]; then
 	export HOMEBREW_NO_ENV_HINTS=1
 	export HOMEBREW_NO_INSTALL_CLEANUP=1
 	export HOMEBREW_NO_AUTO_UPDATE=1
+	export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1
+	export HOMEBREW_BUNDLE_NO_DESCRIBE=1
 	alias bu="brew update"
 	alias bug="brew upgrade"
 	alias bi="brew install"
