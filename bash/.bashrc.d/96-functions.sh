@@ -170,6 +170,29 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-ffdl() {
-	fanficfare --download-list=$*
+if command -v fanficfare&>/dev/null; then
+	fff() {
+		if [[ $# -eq 0 ]]; then
+			fanficfare `pbpaste`
+		else
+			fanficfare "$@"
+		fi
 	}
+	ffu () {
+		if [[ $# -eq 0 ]]; then
+			eval fanficfare -u "$(pbpaste | tr -d '\r\n')"
+		else
+			fanficfare -u "$*"
+		fi
+	}
+	fft() {
+		if [[ $# -eq 0 ]]; then
+			fanficfare -f txt `pbpaste`
+		else
+			fanficfare -f txt "$@"
+		fi
+	}
+	ffdl() {
+		fanficfare --download-list=$*
+	}
+fi
