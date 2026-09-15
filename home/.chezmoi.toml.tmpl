@@ -2,29 +2,21 @@
 {{- $gitEmail := promptStringOnce . "gitEmail" "Git email" "johann@jtan.me" -}}
 {{- $trustedMac := false -}}
 {{- if eq .chezmoi.os "darwin" -}}
-	{{- $trustedMac = promptBoolOnce . "trustedMac" "Enable Strongbox signing and KeePassXC on this trusted Mac" false -}}
+	{{- $trustedMac = promptBoolOnce . "trustedMac" "Enable Strongbox signing and secrets on this trusted Mac" false -}}
 {{- end -}}
-{{- $database := "" -}}
 {{- $entry := "" -}}
 {{- $attribute := "Public Key" -}}
 {{- $ao3Entry := get . "ao3Entry" | default "" -}}
 {{- if $trustedMac -}}
-	{{- $database = promptStringOnce . "keepassxcDatabase" "Local KDBX database path" -}}
 	{{- $entry = promptStringOnce . "signingKeyEntry" "Signing key entry path (including groups)" -}}
 	{{- $attribute = promptStringOnce . "signingKeyAttribute" "Signing public key attribute name" "Public key" -}}
-	{{- if or (eq (trim $database) "") (eq (trim $entry) "") (eq (trim $attribute) "") -}}
-		{{- fail "Trusted Mac setup requires a database path, signing entry, and public-key attribute name" -}}
-	{{- end -}}
-	{{- if hasPrefix "~/" $database -}}
-		{{- $database = joinPath .chezmoi.homeDir (trimPrefix "~/" $database) -}}
-	{{- end -}}
-	{{- if not (hasPrefix "/" $database) -}}
-		{{- fail "Use an absolute KDBX database path or a path starting with ~/" -}}
+	{{- if or (eq (trim $entry) "") (eq (trim $attribute) "") -}}
+		{{- fail "Trusted Mac setup requires a signing entry and public-key attribute name" -}}
 	{{- end -}}
 	{{- if lookPath "fanficfare" -}}
-		{{- $ao3Entry = promptStringOnce . "ao3Entry" "AO3 KeePassXC entry path (including groups)" -}}
+		{{- $ao3Entry = promptStringOnce . "ao3Entry" "AO3 Strongbox entry path (including groups)" -}}
 		{{- if eq (trim $ao3Entry) "" -}}
-			{{- fail "FanFicFare credentials require an AO3 KeePassXC entry path" -}}
+			{{- fail "FanFicFare credentials require an AO3 Strongbox entry path" -}}
 		{{- end -}}
 	{{- end -}}
 {{- end -}}
@@ -34,15 +26,11 @@
 	gitEmail = {{ $gitEmail | quote }}
 	trustedMac = {{ $trustedMac }}
 	ao3Entry = {{ $ao3Entry | quote }}
-{{ if $trustedMac }}	keepassxcDatabase = {{ $database | quote }}
-	signingKeyEntry = {{ $entry | quote }}
+{{ if $trustedMac }}	signingKeyEntry = {{ $entry | quote }}
 	signingKeyAttribute = {{ $attribute | quote }}
 
-[keepassxc]
-	database = {{ $database | quote }}
-	command = "keepassxc-cli"
-	mode = "cache-password"
-	prompt = true
+[secret]
+	command = "strongbox"
 {{ end }}
 [git]
 	autoAdd = false

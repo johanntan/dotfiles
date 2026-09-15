@@ -1,0 +1,20 @@
+{{- /* secretJSON caches each query during this invocation and supports --skip-secrets. */ -}}
+{{- $path := trimAll "/" .entry -}}
+{{- $parts := splitList "/" $path -}}
+{{- $title := last $parts -}}
+{{- if eq (trim $title) "" -}}
+	{{- fail "Configure a nonempty Strongbox entry name with chezmoi init" -}}
+{{- end -}}
+{{- $group := initial $parts | join "/" | lower -}}
+{{- $response := secretJSON "search" "--output" "json" "--unlock" "true" "--take" "-1" "--" $title -}}
+{{- $matches := list -}}
+{{- range $response.results -}}
+	{{- $breadcrumb := get . "breadcrumb" | default "" | replace " > " "/" | trimAll "/" | lower -}}
+	{{- if and (eq (lower .title) (lower $title)) (or (eq $group "") (eq $breadcrumb $group) (eq $breadcrumb (lower $path))) -}}
+		{{- $matches = append $matches . -}}
+	{{- end -}}
+{{- end -}}
+{{- if ne (len $matches) 1 -}}
+	{{- fail "Strongbox entry must match exactly once; check its title/group, unlock its database, and enable AutoFill (duplicate entries across databases are ambiguous)" -}}
+{{- end -}}
+{{- first $matches | toJson -}}
