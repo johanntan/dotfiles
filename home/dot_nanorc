@@ -1,0 +1,9 @@
+set emptyline
+set nowrap
+set nohelp
+set positionlog
+set autoindent
+unset constantshow
+unset mouse
+
+unset softwrap

@@ -1,0 +1,6 @@
+{{- if and (eq .chezmoi.os "darwin") .trustedMac -}}
+	{{- if not (regexMatch `^[^[:space:],]+@[^[:space:],]+$` .gitEmail) -}}
+		{{- fail "gitEmail must be a single email address for the SSH allowed-signers file" -}}
+	{{- end -}}
+{{ .gitEmail }} namespaces="git" {{ template "git-signing-key" . }}
+{{ end -}}

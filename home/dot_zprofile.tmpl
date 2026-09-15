@@ -1,0 +1,40 @@
+{{- $brew := "" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+	{{- if eq .chezmoi.arch "arm64" -}}
+		{{- $brew = "/opt/homebrew/bin/brew" -}}
+	{{- else -}}
+		{{- $brew = "/usr/local/bin/brew" -}}
+	{{- end -}}
+{{- else if eq .chezmoi.os "linux" -}}
+	{{- $brew = "/home/linuxbrew/.linuxbrew/bin/brew" -}}
+{{ end -}}
+{{ if $brew -}}
+if [[ -x {{ $brew }} ]]; then
+	# Homebrew preferences apply before shellenv runs.
+	export HOMEBREW_NO_ANALYTICS=1
+	export HOMEBREW_NO_EMOJI=1
+	export HOMEBREW_NO_ENV_HINTS=1
+	export HOMEBREW_NO_INSTALL_CLEANUP=1
+	export HOMEBREW_NO_AUTO_UPDATE=1
+	export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1
+	export HOMEBREW_BUNDLE_NO_DESCRIBE=1
+	eval "$({{ $brew }} shellenv zsh)"
+fi
+{{ end }}
+# Zsh's path array keeps repeated login/profile sourcing idempotent.
+typeset -U path PATH
+if [[ -d "$HOME/go/bin" ]]; then
+	path=("$HOME/go/bin" $path)
+fi
+path=("$HOME/.local/bin" "$HOME/bin" $path)
+export PATH
+
+if [[ -r "$HOME/.cargo/env" ]]; then
+	source "$HOME/.cargo/env"
+fi
+
+{{ if eq .chezmoi.os "darwin" -}}
+if [[ -r "$HOME/.orbstack/shell/init.zsh" ]]; then
+	source "$HOME/.orbstack/shell/init.zsh"
+fi
+{{ end -}}

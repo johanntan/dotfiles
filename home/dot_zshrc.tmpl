@@ -1,0 +1,119 @@
+export EDITOR=vi
+{{ if eq .chezmoi.os "darwin" -}}
+if (( $+commands[mate] )); then
+	export EDITOR="mate -w"
+fi
+
+{{ if .trustedMac -}}
+# Also set this for interactive non-login shells. Strongbox handles unlocking.
+export SSH_AUTH_SOCK="$HOME/Library/Group Containers/group.strongbox.mac.mcguill/agent.sock"
+{{ end }}
+cdf() { # short for `cdfinder`
+	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
+}
+{{ else if eq .chezmoi.os "linux" -}}
+if (( $+commands[rmate] )); then
+	export EDITOR="rmate -w"
+fi
+{{ end -}}
+mkd() {
+	mkdir -p "$@" && cd "$_";
+}
+fs() {
+	if du -b /dev/null > /dev/null 2>&1; then
+		local arg=-sbh;
+	else
+		local arg=-sh;
+	fi
+	if [[ -n "$@" ]]; then
+		du $arg -- "$@";
+	else
+		du $arg .[^.]* ./*;
+	fi;
+}
+{{ if eq .chezmoi.os "darwin" -}}
+o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
+}
+{{ else if eq .chezmoi.os "linux" -}}
+if (( $+commands[xdg-open] )); then
+	o() {
+		xdg-open "${1:-.}"
+	}
+fi
+{{ end }}
+
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
+# The standalone installer uses ~/.atuin/bin. Include it in non-login shells too.
+if [[ -d "$HOME/.atuin/bin" ]]; then
+	typeset -U path PATH
+	path=("$HOME/.atuin/bin" $path)
+fi
+if (( $+commands[atuin] )); then
+	eval "$(atuin init zsh --disable-up-arrow)"
+fi
+if (( $+commands[zoxide] )); then
+	eval "$(zoxide init zsh)"
+fi
+
+if (( $+commands[brew] )); then
+	alias bu="brew update"
+	alias bug="brew upgrade"
+	alias bi="brew install"
+	alias bic="brew install --cask"
+	alias bcl="brew cleanup"
+fi
+
+if (( $+commands[rclone] )); then
+	export RCLONE_STATS=10s
+	export RCLONE_CHECKERS=16
+	export RCLONE_STATS_FILE_NAME_LENGTH=0
+	export RCLONE_LOG_FILE=/tmp/rclone.log
+fi
+
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+
+setopt AUTO_CD
+setopt INTERACTIVE_COMMENTS
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^[e' edit-command-line
+autoload -Uz vcs_info
+autoload -Uz add-zsh-hook
+
+setopt PROMPT_SUBST
+
+zstyle ':vcs_info:git:*' formats ' on %b'
+
+update_prompt() {
+	local last_status=$?
+
+	vcs_info
+
+	if (( last_status != 0 )); then
+		prompt_status="[exit $last_status] "
+	else
+		prompt_status=""
+	fi
+}
+
+add-zsh-hook precmd update_prompt
+
+PROMPT='
+${prompt_status}%n at %m in %2~${vcs_info_msg_0_}
+%# '
+
+PS2='→ '

@@ -1,0 +1,5 @@
+gitName = "Johann"
+gitEmail = "johann@jtan.me"
+trustedMac = false
+signingKeyEntry = ""
+signingKeyAttribute = "Public key"

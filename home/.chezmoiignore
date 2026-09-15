@@ -1,0 +1,4 @@
+{{ if not (and (eq .chezmoi.os "darwin") .trustedMac) }}
+.ssh/git_signing_key.pub
+.ssh/git_allowed_signers
+{{ end }}

@@ -1,0 +1,26 @@
+[core]
+	excludesfile = ~/.gitignore-global
+[user]
+	name = {{ .gitName | quote }}
+	email = {{ .gitEmail | quote }}
+[alias]
+	p = pull --recurse-submodules
+	c = clone --recursive
+	co = checkout
+[advice]
+	detachedHead = false
+	defaultBranchName = false
+[init]
+	defaultBranch = main
+{{ if and (eq .chezmoi.os "darwin") .trustedMac }}
+[gpg]
+	format = ssh
+[user]
+	signingkey = ~/.ssh/git_signing_key.pub
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/git_allowed_signers
+[commit]
+	gpgsign = true
+{{ end }}
+[include]
+	path = ~/.gitconfig-local
