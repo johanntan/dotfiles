@@ -3,3 +3,4 @@ gitEmail = "johann@jtan.me"
 trustedMac = false
 signingKeyEntry = ""
 signingKeyAttribute = "Public key"
+ao3Entry = ""

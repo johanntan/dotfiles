@@ -2,3 +2,7 @@
 .ssh/git_signing_key.pub
 .ssh/git_allowed_signers
 {{ end }}
+{{ if not (lookPath "fanficfare") }}
+.config/fanficfare
+.config/fanficfare/**
+{{ end }}

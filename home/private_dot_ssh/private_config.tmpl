@@ -1,0 +1,15 @@
+{{ if eq .chezmoi.os "darwin" -}}
+# Keep OrbStack's generated config before any Host blocks.
+Include ~/.orbstack/ssh/config
+
+{{ end -}}
+# Per-machine hosts and overrides remain outside chezmoi.
+Host *
+	Include ~/.ssh/config-local
+
+# Defaults follow host-specific settings because SSH uses the first value found.
+Host *
+	ConnectionAttempts 120
+	ServerAliveInterval 120
+{{ if and (eq .chezmoi.os "darwin") .trustedMac }}	IdentityAgent "~/Library/Group Containers/group.strongbox.mac.mcguill/agent.sock"
+{{ end -}}

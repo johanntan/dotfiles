@@ -1,0 +1,16 @@
+# Managed by chezmoi. This file may contain credentials; do not share its contents.
+[archiveofourown.org]
+{{ if and (lookPath "fanficfare") (eq .chezmoi.os "darwin") .trustedMac -}}
+{{- if eq .ao3Entry "" -}}
+	{{- fail "Set ao3Entry with chezmoi init before applying FanFicFare credentials" -}}
+{{- end -}}
+{{- $username := keepassxcAttribute .ao3Entry "UserName" -}}
+{{- $password := keepassxcAttribute .ao3Entry "Password" -}}
+{{- range $value := list $username $password -}}
+	{{- if or (eq $value "") (eq $value `""`) (regexMatch `[\r\n]|[[:space:]];` $value) -}}
+		{{- fail "AO3 credentials must be nonempty single-line INI values without whitespace followed by a semicolon" -}}
+	{{- end -}}
+{{- end -}}
+username: {{ $username | replace "%" "%%" }}
+password: {{ $password | replace "%" "%%" }}
+{{ end -}}
