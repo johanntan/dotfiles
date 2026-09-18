@@ -11,5 +11,6 @@ Host *
 Host *
 	ConnectionAttempts 120
 	ServerAliveInterval 120
+	User johann
 {{ if and (eq .chezmoi.os "darwin") .trustedMac }}	IdentityAgent "~/Library/Group Containers/group.strongbox.mac.mcguill/agent.sock"
 {{ end -}}
