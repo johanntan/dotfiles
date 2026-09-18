@@ -68,6 +68,10 @@ if (( $+commands[brew] )); then
 	alias bic="brew install --cask"
 	alias bcl="brew cleanup"
 fi
+if (( $+commands[brew] )); then
+	alias fff=fanficfare
+	alias ffu='fanficcfare -u'
+fi
 
 if (( $+commands[rclone] )); then
 	export RCLONE_STATS=10s

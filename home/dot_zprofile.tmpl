@@ -21,6 +21,7 @@ if [[ -x {{ $brew }} ]]; then
 	eval "$({{ $brew }} shellenv zsh)"
 fi
 {{ end }}
+export PYTHONPYCACHEPREFIX=/tmp/pycache
 # Zsh's path array keeps repeated login/profile sourcing idempotent.
 typeset -U path PATH
 if [[ -d "$HOME/go/bin" ]]; then
