@@ -47,8 +47,20 @@ if (( $+commands[xdg-open] )); then
 fi
 {{ end }}
 
+# Rustup keeps Cargo's completion inside the selected toolchain, outside fpath.
+if (( $+commands[cargo] && $+commands[rustup] )); then
+	if _cargo_bin=$(rustup which cargo 2>/dev/null); then
+		if [[ -r "${_cargo_bin:h:h}/share/zsh/site-functions/_cargo" ]]; then
+			typeset -U fpath
+			fpath=("${_cargo_bin:h:h}/share/zsh/site-functions" $fpath)
+		fi
+	fi
+	unset _cargo_bin
+fi
+
 autoload -Uz compinit && compinit
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
+# Include both lowercase and uppercase matches from the first completion attempt.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # The standalone installer uses ~/.atuin/bin. Include it in non-login shells too.
 if [[ -d "$HOME/.atuin/bin" ]]; then
 	typeset -U path PATH
