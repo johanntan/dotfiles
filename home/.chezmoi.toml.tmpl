@@ -1,4 +1,4 @@
-{{- $gitName := promptStringOnce . "gitName" "Git name" "Johann" -}}
+{{- $gitName := promptStringOnce . "gitName" "Git name" "Johann Tan" -}}
 {{- $gitEmail := promptStringOnce . "gitEmail" "Git email" "johann@jtan.me" -}}
 {{- $trustedMac := false -}}
 {{- if eq .chezmoi.os "darwin" -}}
