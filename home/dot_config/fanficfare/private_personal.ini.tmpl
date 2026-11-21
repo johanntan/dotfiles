@@ -4,9 +4,10 @@
 {{- if eq .ao3Entry "" -}}
 	{{- fail "Set ao3Entry with chezmoi init before applying FanFicFare credentials" -}}
 {{- end -}}
-{{- $entry := includeTemplate "strongbox-entry" (dict "entry" .ao3Entry) | fromJson -}}
-{{- $username := get $entry "username" | default "" -}}
-{{- $password := get $entry "password" | default "" -}}
+{{- $entry := bitwarden "item" .ao3Entry -}}
+{{- $login := get $entry "login" | default dict -}}
+{{- $username := get $login "username" | default "" -}}
+{{- $password := get $login "password" | default "" -}}
 {{- range $value := list $username $password -}}
 	{{- if or (eq $value "") (eq $value `""`) (ne $value (trim $value)) (regexMatch `[\r\n]|[[:space:]];` $value) -}}
 		{{- fail "AO3 credentials must be nonempty single-line INI values without whitespace followed by a semicolon" -}}

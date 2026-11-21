@@ -2,21 +2,26 @@
 {{- $gitEmail := promptStringOnce . "gitEmail" "Git email" "johann@jtan.me" -}}
 {{- $trustedMac := false -}}
 {{- if eq .chezmoi.os "darwin" -}}
-	{{- $trustedMac = promptBoolOnce . "trustedMac" "Enable Strongbox signing and secrets on this trusted Mac" false -}}
+	{{- $trustedMac = promptBoolOnce . "trustedMac" "Enable signing and Bitwarden secrets on this trusted Mac" false -}}
 {{- end -}}
 {{- $entry := "" -}}
-{{- $attribute := "Public Key" -}}
 {{- $ao3Entry := get . "ao3Entry" | default "" -}}
+{{- $rcloneEntry := get . "rcloneEntry" | default "rclone" -}}
 {{- if $trustedMac -}}
-	{{- $entry = promptStringOnce . "signingKeyEntry" "Signing key entry path (including groups)" -}}
-	{{- $attribute = promptStringOnce . "signingKeyAttribute" "Signing public key attribute name" "Public key" -}}
-	{{- if or (eq (trim $entry) "") (eq (trim $attribute) "") -}}
-		{{- fail "Trusted Mac setup requires a signing entry and public-key attribute name" -}}
+	{{- $entry = promptStringOnce . "signingKeyEntry" "Signing SSH-key Bitwarden item ID (or unique item name)" "git-ssh" -}}
+	{{- if eq (trim $entry) "" -}}
+		{{- fail "Trusted Mac setup requires a signing SSH-key Bitwarden item ID or unique name" -}}
 	{{- end -}}
 	{{- if lookPath "fanficfare" -}}
-		{{- $ao3Entry = promptStringOnce . "ao3Entry" "AO3 Strongbox entry path (including groups)" -}}
+		{{- $ao3Entry = promptStringOnce . "ao3Entry" "AO3 Bitwarden item ID (or unique item name)" -}}
 		{{- if eq (trim $ao3Entry) "" -}}
-			{{- fail "FanFicFare credentials require an AO3 Strongbox entry path" -}}
+			{{- fail "FanFicFare credentials require an AO3 Bitwarden item ID or unique name" -}}
+		{{- end -}}
+	{{- end -}}
+	{{- if lookPath "rclone" -}}
+		{{- $rcloneEntry = promptStringOnce . "rcloneEntry" "Rclone config-password Bitwarden item ID (or unique item name)" "rclone" -}}
+		{{- if eq (trim $rcloneEntry) "" -}}
+			{{- fail "Rclone config-password lookup requires a Bitwarden item ID or unique name" -}}
 		{{- end -}}
 	{{- end -}}
 {{- end -}}
@@ -26,11 +31,12 @@
 	gitEmail = {{ $gitEmail | quote }}
 	trustedMac = {{ $trustedMac }}
 	ao3Entry = {{ $ao3Entry | quote }}
+	rcloneEntry = {{ $rcloneEntry | quote }}
 {{ if $trustedMac }}	signingKeyEntry = {{ $entry | quote }}
-	signingKeyAttribute = {{ $attribute | quote }}
 
-[secret]
-	command = "strongbox"
+[bitwarden]
+	command = "bwbio"
+	unlock = "auto"
 {{ end }}
 [git]
 	autoAdd = false
