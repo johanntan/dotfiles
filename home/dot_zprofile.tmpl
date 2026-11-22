@@ -1,4 +1,6 @@
-{{- $brew := "" -}}
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+{{ $brew := "" -}}
 {{- if eq .chezmoi.os "darwin" -}}
 	{{- if eq .chezmoi.arch "arm64" -}}
 		{{- $brew = "/opt/homebrew/bin/brew" -}}
