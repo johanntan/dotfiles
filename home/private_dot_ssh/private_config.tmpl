@@ -12,5 +12,5 @@ Host *
 	ConnectionAttempts 120
 	ServerAliveInterval 120
 	User johann
-{{ if and (eq .chezmoi.os "darwin") .trustedMac }}	IdentityAgent "~/.bitwarden-ssh-agent.sock"
+{{ if and (eq .chezmoi.os "darwin") .trustedMac }}	IdentityAgent ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 {{ end -}}

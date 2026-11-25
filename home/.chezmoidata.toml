@@ -1,6 +1,6 @@
 gitName = "Johann Tan"
 gitEmail = "johann@jtan.me"
 trustedMac = false
-signingKeyEntry = ""
+signingKey = ""
 ao3Entry = ""
 rcloneEntry = "rclone"

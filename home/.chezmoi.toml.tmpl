@@ -4,13 +4,13 @@
 {{- if eq .chezmoi.os "darwin" -}}
 	{{- $trustedMac = promptBoolOnce . "trustedMac" "Enable signing and Bitwarden secrets on this trusted Mac" false -}}
 {{- end -}}
-{{- $entry := "" -}}
+{{- $signingKey := "" -}}
 {{- $ao3Entry := get . "ao3Entry" | default "" -}}
 {{- $rcloneEntry := get . "rcloneEntry" | default "rclone" -}}
 {{- if $trustedMac -}}
-	{{- $entry = promptStringOnce . "signingKeyEntry" "Signing SSH-key Bitwarden item ID (or unique item name)" "git-ssh" -}}
-	{{- if eq (trim $entry) "" -}}
-		{{- fail "Trusted Mac setup requires a signing SSH-key Bitwarden item ID or unique name" -}}
+	{{- $signingKey = promptStringOnce . "signingKey" "Git signing SSH public key (copy from Secretive)" | trim -}}
+	{{- if eq $signingKey "" -}}
+		{{- fail "Trusted Mac setup requires the Git signing public key from Secretive" -}}
 	{{- end -}}
 	{{- if lookPath "fanficfare" -}}
 		{{- $ao3Entry = promptStringOnce . "ao3Entry" "AO3 Bitwarden item ID (or unique item name)" -}}
@@ -32,7 +32,7 @@
 	trustedMac = {{ $trustedMac }}
 	ao3Entry = {{ $ao3Entry | quote }}
 	rcloneEntry = {{ $rcloneEntry | quote }}
-{{ if $trustedMac }}	signingKeyEntry = {{ $entry | quote }}
+{{ if $trustedMac }}	signingKey = {{ $signingKey | quote }}
 
 [bitwarden]
 	command = "bwbio"

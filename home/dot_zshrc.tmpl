@@ -5,8 +5,8 @@ if (( $+commands[mate] )); then
 fi
 
 {{ if .trustedMac -}}
-# Homebrew/.dmg Bitwarden desktop app; also works in non-login shells.
-export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+# Secretive's Secure Enclave agent; also works in non-login shells.
+export SSH_AUTH_SOCK="$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
 {{ end }}
 cdf() { # short for `cdfinder`
 	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
